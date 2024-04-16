@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState,memo} from "react";
+import {Child1} from "./components/child1";
+import {Child4} from "./components/child4";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+export const App =memo(() => {
+  console.log("ﾚﾝﾀﾞﾘﾝｸﾞ")
+
+  const [num,setNum]= useState(0);
+
+  const onClickButton =()=>{
+    setNum((prev) => prev+1);
+  };
+
+  const onClickReset = () => {
+    setNum(0);
+  };
+
+
+  return(
+    <>
+      <button onClick={onClickButton}>ボタン</button>
+      <p>{num}</p>
+      <Child1 onClickReset={onClickReset} />
+      <Child4/>
+    </>
   );
-}
-
+});
 export default App;
