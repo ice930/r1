@@ -1,20 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import {useContext} from "react";
+import {AdminFlagContext} from "./components/providers/AdminFlagProvider";
+import {Card} from "./components/Card";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+export const App = () => {
+  const {isAdmin,setIsAdmin}=useContext(AdminFlagContext);
+  const onClickSwitch = () => setIsAdmin(!isAdmin);
 
-
-        </a>
-      </header>
+  return(
+    <div>
+      {isAdmin? <span>管理者です。</span>:<span>管理者意外です。</span>}
+      <button onClick={onClickSwitch}>切り替え</button>
+      <Card isAdmin={isAdmin}/>
     </div>
   );
-}
-
+};
 export default App;
