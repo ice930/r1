@@ -1,29 +1,9 @@
 import {useState} from "react";
-import axios from "axios";
+import {useFetchUsers} from "./hooks/useFetchUsers"
 
 export const App = () =>{
-  const [userList, setuserList] = useState([]);
-  const [isLoading, setIsLoading]=useState(false);
-  const [isError, setIsError]=useState(false);
-
-const onClickFetchUser=()=>{
-  setIsLoading(true);
-  setIsError(false);
-
-  axios
-   .get("https://example.com/users")
-   .then(result => {
-    const users = result.data.map(user=>({
-      id: user.id,
-      name: '${user.lesultname} &{user.firstname}',
-      age: user.age
-    }));
-    setuserList(users);
-   })
-   .catch(()=> setIsError(true))
-   .finally(()=> setIsLoading(false));
-};
-
+  const {userList, isLoading, isError, onClickFetchUser}= useFetchUsers();
+  
 return(
   <div>
    <button onClick={onClickFetchUser}>ﾕｰｻﾞｰ取得</button>
