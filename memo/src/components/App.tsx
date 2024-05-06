@@ -1,60 +1,34 @@
-import React from 'react';
+import React,{useState, FC, ChangeEvent,useCallback} from 'react';
 import styled from "styled-components";
-import {useState, FC, ChangeEvent} from 'react'
+import {MemoList} from "./MemoList";
+import {useMemoList} from"../hooks/useMemoList";
 
 export const App:FC = () => {
+  const {memos,addTodo,deleteTodo}=useMemoList();
   const [text, setText]= useState<string>("");
-  const [memos, setMemos]= useState<string[]>([]);
   const onChangeText=(e: ChangeEvent <HTMLInputElement>)=>setText(e.target.value);
 
   const onClickAdd = ()=> {
-    const newMemos=[...memos];
-    newMemos.push(text);
-    setMemos(newMemos);
+    addTodo(text);
     setText("");
   };
   
-  const onClickDelete = (index:number)=>{
-    const newMemos = [...memos];
-    newMemos.splice(index,1);
-    setMemos(newMemos);
-  };
+  const onClickDelete = useCallback((index:number)=>{
+    deleteTodo(index);
+  },[deleteTodo]);
 
 return (
   <div>
     <h1>メモｱﾌﾟﾘ</h1>
     <input type="text" value={text} onChange={onChangeText} />
     <SButton onClick={onClickAdd}>追加</SButton>
-    <SContainer>
-      <p>メモ一覧</p>
-      <ul>
-        {memos.map((memo, index)=>(
-          <li key={memo}>
-            <SMemoWrapper>
-              <p>{memo}</p>
-              <SButton onClick={()=>onClickDelete(index)}>削除</SButton>
-            </SMemoWrapper>
-          </li>
-        ))}
-      </ul>
-    </SContainer>
+    <MemoList memos ={memos} onClickDelete={onClickDelete} />
   </div>
-);
+ );
 };
 
 const SButton = styled.button`
 margin-left: 16px;
-`;
-
-const SContainer = styled.div`
-  border: solid 1px #ccc;
-  padding: 16px;
-  margin:8px;
-`;
-
-const SMemoWrapper = styled.div`
-display : flex;
-align-items: center;
 `;
 
 export default App;

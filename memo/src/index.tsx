@@ -1,5 +1,5 @@
-import {render} from "react-dom";
+import ReactDOM from "react-dom";
 import {App}from "./components/App";
 
 const rootElement = document.getElementById("root");
-render(<App />,rootElement);
+ReactDOM.render(<App />,rootElement);
